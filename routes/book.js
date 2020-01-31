@@ -52,14 +52,14 @@ const uploads = multer({
     fileFilter: bookFileFilter
 });
 
-uploadRouter.route('/upload')
-    .post(upload.single('imageFile'), (req, res) => {
-        res.json(req.file);
-    });
+// uploadRouter.route('/upload')
+//     .post(upload.single('imageFile'), (req, res) => {
+//         res.json(req.file);
+//     });
 
 
 //post products or items
-router.post('/savebook',upload.single('BookImage'),uploads.single('BookContent'),(req,res)=>{
+router.post('/savebook',upload.single('BookImage'),(req,res)=>{
     let newBook = new Book({
         BookName:req.body.BookName,
         BookWriter:req.body.BookWriter,
