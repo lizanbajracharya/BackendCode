@@ -19,8 +19,24 @@ router.get('/product/:id',(req,res,next)=>{
 //get all the products or items list
 router.get('/list',(req,res)=>{
     Product.find({}).
+    // select().
     exec().then((productList)=>{
-        res.send(productList);
+        const response={
+            count:productList.length,
+            products:productList.map(productList=>{
+                return{
+                    productName:productList.productName,
+                    price:productList.price,
+                    productImage:productList.productImage,
+                    _id:productList._id,
+                    request:{
+                        type:'GET',
+                        url:'http://localhost:3000/product/'+productList._id
+                    }
+                }
+            })
+        }
+        res.send(response);
     }).catch((e)=>{
         res.send(e);
     })
@@ -55,13 +71,25 @@ const upload = multer({
 //post products or items
 router.post('/save',upload.single('productImage'),(req,res)=>{
     let newProduct = new Product({
-        _id:new mongoose.Types.ObjectId(),
         productName:req.body.productName,
         price:req.body.price,
-        productImage:req.file.filename
+        productImage:req.file.filename,
     });
     newProduct.save().then((productDoc)=>{
-        res.send(productDoc);
+        console.log(productDoc);
+        res.status(201).json({
+            message:"Created product successfully",
+            createdProduct:{
+                productName: productDoc.productName,
+                price:productDoc.price,
+                _id:productDoc._id,
+                productImage:productDoc.productImage,
+                request:{
+                    type:'GET',
+                    url:"http://localhost:3000/product/"+productDoc._id
+                }
+            }
+        })
     }).catch(err =>console.log(err))
 });
 
