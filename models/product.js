@@ -3,7 +3,7 @@ const ProductSchema = new mongoose.Schema({
     productName:{
         type:String,
         required:true,
-        min:3,
+        min:4,
         trim:true
     },
     price:{
