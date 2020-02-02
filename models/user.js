@@ -18,10 +18,12 @@ const UserSchema=new mongoose.Schema({
         trim: true
     },
     Email:{
-        type:String
+        type:String,
+        required:true
     },
     username:{
-        type:String
+        type:String,
+        required:true
     }
 });
 
