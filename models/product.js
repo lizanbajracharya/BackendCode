@@ -17,6 +17,9 @@ const ProductSchema = new mongoose.Schema({
     },
     productDescription:{
         type:String
+    },
+    Stock:{
+        type:String
     }
 });
 
