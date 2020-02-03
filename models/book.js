@@ -9,7 +9,13 @@ const BookSchema = new mongoose.Schema({
     BookImage:{
         type:String
     },
+    Category:{
+        type:String
+    },
     BookWriter:{
+        type:String
+    },
+    isFavorite:{
         type:String
     },
     BookContent:{

@@ -32,10 +32,10 @@ const upload = multer({
     storage: storage,
     fileFilter: imageFileFilter
 });
-//path to store image
+
 const storages = multer.diskStorage({
     destination: "./book/booklist",
-    filename: (req, file, callback) => {
+    filenames: (req, file, callback) => {
         let ext = path.extname(file.originalname);
         callback(null, `${file.fieldname}-${Date.now()}${ext}`);
     }
@@ -49,7 +49,7 @@ const bookFileFilter = (req, file, cb) => {
 };
 const uploads = multer({
     storages: storages,
-    fileFilter: bookFileFilter
+    fileFilters: bookFileFilter
 });
 
 // uploadRouter.route('/upload')
@@ -59,12 +59,14 @@ const uploads = multer({
 
 
 //post products or items
-router.post('/savebook',upload.single('BookImage'),(req,res)=>{
+router.post('/savebook',upload.single('BookImage'),uploads.single('BookContent'),(req,res)=>{
     let newBook = new Book({
         BookName:req.body.BookName,
         BookWriter:req.body.BookWriter,
         BookImage:req.file.filename,
-        BookContent:req.file.filename
+        BookContent:req.file.filenames,
+        Category:req.body.Category,
+        isFavorite:req.body.isFavorite
     });
     newBook.save().then((bookDoc)=>{
         res.send(bookDoc);
