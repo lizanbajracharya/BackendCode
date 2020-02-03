@@ -37,7 +37,7 @@ router.get('/list',(req,res)=>{
 });
 
 router.post('/login', (req, res, next) => {
-    User.findOne({ mobileNumber: req.body.mobileNumber })
+    User.findOne({ username: req.body.username })
         .then((user) => {
             if (user == null) {
                 let err = new Error('User not exist');
