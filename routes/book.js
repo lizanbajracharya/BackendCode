@@ -5,14 +5,27 @@ const path=require("path");
 const router = express.Router();
 const uploadRouter = express.Router();
 
-//get all the products or items list
-router.get('/listbook',(req,res)=>{
-    Book.find({}).then((booklist)=>{
-        res.send(booklist);
-    }).catch((e)=>{
-        res.send(e);
+router.get('/:id',(req,res,next)=>{
+    Book.findById(req.params.id).exec().then(doc=>{
+        console.log(doc)
+        res.status(200).json({doc})
     })
-});
+    .catch(err=>{
+        console.log(err)
+        res.status(500).json({error:err})
+    })
+})
+//get all the products or items list
+router.get('/', async(req, res) => {
+    try{
+        const data = await Book.find({})
+        res.json({data:data,message:true})
+    }
+    catch(err){
+        res.json({message:false, error:err})
+    }
+})
+
 
 const storage = multer.diskStorage({
     destination: "./upload/productlist",
@@ -23,7 +36,7 @@ const storage = multer.diskStorage({
 });
 //check file types
 const imageFileFilter = (req, file, cb) => {
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|pdf)$/)) {
         return cb(new Error("You can upload only image files!"), false);
     }
     cb(null, true);
@@ -59,12 +72,12 @@ const uploads = multer({
 
 
 //post products or items
-router.post('/savebook',upload.single('BookImage'),uploads.single('BookContent'),(req,res)=>{
+router.post('/savebook',upload.array('BookImage','BookContent',2),(req,res)=>{
     let newBook = new Book({
         BookName:req.body.BookName,
         BookWriter:req.body.BookWriter,
         BookImage:req.file.filename,
-        BookContent:req.file.filenames,
+        BookContent:req.file.filename,
         Category:req.body.Category,
         isFavorite:req.body.isFavorite
     });
@@ -74,9 +87,9 @@ router.post('/savebook',upload.single('BookImage'),uploads.single('BookContent')
 });
 
 //get single products or items by id
-router.patch('/book/:bookid',upload.single('imageFile'),(req, res) => {
+router.put('/:id',upload.single('imageFile'),(req, res) => {
     Book.findOne({
-        _id: req.params.productId
+        _id: req.params.id
     }).then((book) => {
         if (book) {
             return true;
@@ -105,4 +118,34 @@ router.delete('/deletebook/:id', function(req, res){
         res.send(e)
     })
     })
+
+router.put('/update/:id', async (req, res)=>{
+    try{
+        const data = await Book.findOneAndUpdate({_id:req.params.id},
+            {
+                $set: {
+                    isFavorite:"1"
+                }
+            })
+        res.json({data:data, result:true})
+    }
+    catch(err){
+        res.json({message:err, result:false})
+    }
+})
+
+router.put('/updates/:id', async (req, res)=>{
+    try{
+        const data = await Book.findOneAndUpdate({_id:req.params.id},
+            {
+                $set: {
+                    isFavorite:"0"
+                }
+            })
+        res.json({data:data, result:true})
+    }
+    catch(err){
+        res.json({message:err, result:false})
+    }
+})
 module.exports=router;

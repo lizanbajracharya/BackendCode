@@ -1,0 +1,46 @@
+{
+  "name": "t2-backend-api-lizanbajracharya",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "bson": "^1.1.3",
+    "express": "^4.17.1",
+    "jest": "^25.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "kareem": "^2.3.1",
+    "memory-pager": "^1.5.0",
+    "mongoose": "^5.8.5",
+    "mongodb": "^3.4.1",
+    "morgan": "^1.9.1",
+    "mongoose-legacy-pluralize": "^1.0.2",
+    "mpath": "^0.6.0",
+    "multer": "^1.4.2",
+    "path": "^0.12.7",
+    "regexp-clone": "^1.0.0",
+    "resolve-from": "^2.0.0",
+    "safe-buffer": "^5.1.2",
+    "require_optional": "^1.0.1",
+    "saslprep": "^1.0.3",
+    "semver": "^5.7.1",
+    "sliced": "^1.0.1",
+    "sparse-bitfield": "^3.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/softwarica-github/t2-backend-api-lizanbajracharya.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/softwarica-github/t2-backend-api-lizanbajracharya/issues"
+  },
+  "homepage": "https://github.com/softwarica-github/t2-backend-api-lizanbajracharya#readme"
+}

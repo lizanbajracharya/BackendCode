@@ -35,6 +35,15 @@ router.get('/list',(req,res)=>{
     })
 });
 
+router.get('/:id',(req,res,next)=>{
+    User.findById(req.params.id).exec().then(doc=>{
+        // doc.console
+            res.send(doc.toJSON());
+        }).catch((e)=>{
+            res.send(e);
+        })
+})
+
 router.post('/login', (req, res, next) => {
     User.findOne({ username: req.body.username })
         .then((user) => {

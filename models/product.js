@@ -6,6 +6,9 @@ const ProductSchema = new mongoose.Schema({
         min:4,
         trim:true
     },
+    Writer:{
+        type:String
+    },
     price:{
         type: Number,
         required: true,

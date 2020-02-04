@@ -2,7 +2,6 @@ const mongoose=require('mongoose');
 const BookSchema = new mongoose.Schema({
     BookName:{
         type:String,
-        required:true,
         min:3,
         trim:true
     },
@@ -16,7 +15,7 @@ const BookSchema = new mongoose.Schema({
         type:String
     },
     isFavorite:{
-        type:String
+        type:String,default:0
     },
     BookContent:{
         type:String
