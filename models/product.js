@@ -11,7 +11,7 @@ const ProductSchema = new mongoose.Schema({
     },
     price:{
         type: Number,
-        required: true,
+        // required: true,
         minlength:1,
         trim: true
     },
@@ -23,6 +23,9 @@ const ProductSchema = new mongoose.Schema({
     },
     Stock:{
         type:String
+    },
+    Date:{
+        type:Date
     }
 });
 

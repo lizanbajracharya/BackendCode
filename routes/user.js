@@ -3,7 +3,7 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
-
+const auth = require('../auth')
 const jwtSecret="lizan";
 
 router.post('/signup', (req, res, next) => {
@@ -35,14 +35,20 @@ router.get('/list',(req,res)=>{
     })
 });
 
-router.get('/:id',(req,res,next)=>{
-    User.findById(req.params.id).exec().then(doc=>{
-        // doc.console
-            res.send(doc.toJSON());
-        }).catch((e)=>{
-            res.send(e);
-        })
-})
+router.get('/me', auth.verifyUser, (req, res, next) => {
+    res.json({ _id: req.user._id, 
+        username: req.user.username, 
+        password: req.user.password, mobileNumber: req.user.mobileNumber, Email: req.user.Email });
+});
+
+router.put('/me', auth.verifyUser, (req, res, next) => {
+    User.findByIdAndUpdate(req.user._id, { $set: req.body }, { new: true })
+        .then((user) => {
+            res.json({ _id: req.user._id, 
+                username: req.user.username, 
+                password: req.user.password, mobileNumber: req.user.mobileNumber, Email: req.user.Email});
+        }).catch(next);
+});
 
 router.post('/login', (req, res, next) => {
     User.findOne({ username: req.body.username })

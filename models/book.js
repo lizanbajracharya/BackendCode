@@ -14,11 +14,11 @@ const BookSchema = new mongoose.Schema({
     BookWriter:{
         type:String
     },
-    isFavorite:{
-        type:String,default:0
-    },
     BookContent:{
         type:String
+    },
+    Date:{
+        type:Date
     }
 });
 

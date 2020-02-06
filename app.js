@@ -8,9 +8,13 @@ const multer = require('multer');
 const path = require("path");
 const morgan=require('morgan');
 
+const uploadRouter=require('./routes/upload');
 const productRouter=require('./routes/product');
 const userRouter=require('./routes/user');
 const bookRouter=require('./routes/book');
+const favoriteRouter=require('./routes/favorite');
+const orderRouter=require('./routes/order');
+
 const port = 3000;
 const saltRounds=10;
 const jwtSecret = "0123456789abcdefghijklmnopqrstuvwxyz";
@@ -37,6 +41,9 @@ app.use(express.urlencoded({extended:true}));
 app.use('/product',productRouter);
 app.use('/user',userRouter);
 app.use('/book',bookRouter);
+app.use('/uploadbook',uploadRouter);
+app.use('/favorite',favoriteRouter);
+app.use('/order',orderRouter);
 
 
 app.use((req,res,next)=>{

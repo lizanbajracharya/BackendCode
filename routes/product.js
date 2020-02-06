@@ -4,7 +4,9 @@ const multer=require('multer')
 const path=require("path");
 const router = express.Router();
 const uploadRouter = express.Router();
-const mongoose=require('mongoose')
+const mongoose=require('mongoose');
+const auth='../auth.js';
+
 router.get('/:id',(req,res,next)=>{
     console.log(req.params.id);
     Product.findById(req.params.id).exec().then(doc=>{
@@ -58,10 +60,11 @@ router.post('/save',upload.single('productImage'),(req,res)=>{
     let newProduct = new Product({
         productName:req.body.productName,
         price:req.body.price,
-        productImage:req.file.filename,
+        // productImage:req.file.filename,
         Stock:req.body.Stock,
         Writer:req.body.Writer,
-        productDescription:req.body.productDescription
+        productDescription:req.body.productDescription,
+        Date:Date.now("MM-DD-YYYY")
     });
     newProduct.save().then((productDoc)=>{
         res.send(productDoc)
