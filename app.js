@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require("path");
 const morgan=require('morgan');
-
+const cors = require('cors');
 const uploadRouter=require('./routes/upload');
 const productRouter=require('./routes/product');
 const userRouter=require('./routes/user');
@@ -28,6 +28,8 @@ app.use(function (req,res,next) {
     next();
 });
 
+app.options('*', cors());
+app.use(cors());
 
 app.use('/upload',express.static(__dirname+'/upload/productlist'));
 app.use('/load',express.static(__dirname+'/book/booklist/'));

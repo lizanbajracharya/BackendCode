@@ -4,18 +4,15 @@ const multer=require('multer')
 const path=require("path");
 const router = express.Router();
 
-router.post('/', async (req,res)=>{
+router.post('/save', async (req,res)=>{
     const post = new Favorite({
         userid:req.body.userid,
         bookid:req.body.bookid
     })
-    try{
-        const data = await post.save()
-        res.json({data:data,result:true})
-    }
-    catch(err){
-        res.json({message:err})
-    }
+    // console.log(post)
+    post.save().then((productDoc)=>{
+        res.send(productDoc)
+    })
 });
 
 router.get('/', async (req,res)=>{

@@ -19,13 +19,11 @@ router.get('/:id',(req,res,next)=>{
 
 //get all the products or items list
 router.get('/', async(req, res) => {
-    try{
-        const data = await Product.find({})
-        res.json({data:data,message:true})
-    }
-    catch(err){
-        res.json({message:false, error:err})
-    }
+    Product.find({}).then((productList)=>{
+        res.send(productList);
+    }).catch((e)=>{
+        res.send(e);
+    })
 })
 
 
@@ -56,15 +54,15 @@ const upload = multer({
 
 
 //post products or items
-router.post('/save',upload.single('productImage'),(req,res)=>{
+router.post('/',upload.single('productImage'),(req,res)=>{
     let newProduct = new Product({
         productName:req.body.productName,
         price:req.body.price,
-        // productImage:req.file.filename,
+        productImage:req.file.filename,
         Stock:req.body.Stock,
         Writer:req.body.Writer,
         productDescription:req.body.productDescription,
-        Date:Date.now("MM-DD-YYYY")
+        Date:req.body.Date
     });
     newProduct.save().then((productDoc)=>{
         res.send(productDoc)
@@ -72,7 +70,7 @@ router.post('/save',upload.single('productImage'),(req,res)=>{
 });
 
 //get single products or items by id
-router.patch('/product/:productId',upload.single('imageFile'),(req, res) => {
+router.patch('/:productId',upload.single('imageFile'),(req, res) => {
     Product.findOne({
         _id: req.params.productId
     }).then((product) => {

@@ -46,7 +46,9 @@ router.put('/me', auth.verifyUser, (req, res, next) => {
         .then((user) => {
             res.json({ _id: req.user._id, 
                 username: req.user.username, 
-                password: req.user.password, mobileNumber: req.user.mobileNumber, Email: req.user.Email});
+                password: req.user.password,
+                mobileNumber: req.user.mobileNumber, 
+                Email: req.user.Email});
         }).catch(next);
 });
 
@@ -66,7 +68,7 @@ router.post('/login', (req, res, next) => {
                             return next(err);
                         }
                         let token = jwt.sign({ _id: user._id }, jwtSecret);
-                        res.json({ status: 'Login Successfully', token: token });
+                        res.json({ userid:user._id,status: 'Login Successfully', token: token });
                     }).catch(next);
             }
         }).catch(next);

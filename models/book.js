@@ -5,9 +5,6 @@ const BookSchema = new mongoose.Schema({
         min:3,
         trim:true
     },
-    BookImage:{
-        type:String
-    },
     Category:{
         type:String
     },
@@ -17,8 +14,14 @@ const BookSchema = new mongoose.Schema({
     BookContent:{
         type:String
     },
+    userid:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }
+    ,
     Date:{
-        type:Date
+        type:Date,
+        default:Date.now
     }
 });
 
