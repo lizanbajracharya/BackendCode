@@ -62,7 +62,6 @@ router.post('/',upload.single('productImage'),(req,res)=>{
         Stock:req.body.Stock,
         Writer:req.body.Writer,
         productDescription:req.body.productDescription,
-        Date:req.body.Date
     });
     newProduct.save().then((productDoc)=>{
         res.send(productDoc)

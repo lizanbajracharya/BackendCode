@@ -25,7 +25,8 @@ const ProductSchema = new mongoose.Schema({
         type:String
     },
     Date:{
-        type:Date
+        type:Date,
+        default:Date.now
     }
 });
 

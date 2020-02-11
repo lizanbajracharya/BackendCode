@@ -17,8 +17,7 @@ const BookSchema = new mongoose.Schema({
     userid:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
-    }
-    ,
+    },
     Date:{
         type:Date,
         default:Date.now

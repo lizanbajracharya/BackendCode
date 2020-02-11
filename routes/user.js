@@ -26,7 +26,7 @@ router.post('/signup', (req, res, next) => {
     });
 });
 
-router.get('/list',(req,res)=>{
+router.get('/',(req,res)=>{
     User.find({
     }).then((users)=>{
         res.send(users);
@@ -74,9 +74,8 @@ router.post('/login', (req, res, next) => {
         }).catch(next);
 });
 
-router.delete('/deleteuser/:id', function(req, res){
-    //console.log(req.params.id);
-    Users.findByIdAndDelete(req.params.id).then(function(){
+router.delete('/:id', function(req, res){
+    User.findByIdAndDelete(req.params.id).then(function(){
         res.send("deleted")
     }).catch(function(){ 
         res.send(e)
