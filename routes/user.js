@@ -46,7 +46,6 @@ router.put('/me', auth.verifyUser, (req, res, next) => {
         .then((user) => {
             res.json({ _id: req.user._id, 
                 username: req.user.username, 
-                password: req.user.password,
                 mobileNumber: req.user.mobileNumber, 
                 Email: req.user.Email});
         }).catch(next);

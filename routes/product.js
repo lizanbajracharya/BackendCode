@@ -55,6 +55,7 @@ const upload = multer({
 
 //post products or items
 router.post('/',upload.single('productImage'),(req,res)=>{
+   console.log(req.body)
     let newProduct = new Product({
         productName:req.body.productName,
         price:req.body.price,
@@ -69,7 +70,7 @@ router.post('/',upload.single('productImage'),(req,res)=>{
 });
 
 //get single products or items by id
-router.patch('/:productId',upload.single('imageFile'),(req, res) => {
+router.patch('/:productId',upload.single('productImage'),(req, res) => {
     Product.findOne({
         _id: req.params.productId
     }).then((product) => {
@@ -82,7 +83,8 @@ router.patch('/:productId',upload.single('imageFile'),(req, res) => {
             Product.findOneAndUpdate({
                     _id: req.params.productId
                 }, {
-                    $set: req.body
+                    $set: req.body,
+                    productImage:req.file.filename
                 }
             ).then(() => {
                 res.send({ message: 'product updated successfully' })
