@@ -41,7 +41,7 @@ router.get('/me', auth.verifyUser, (req, res, next) => {
         password: req.user.password, mobileNumber: req.user.mobileNumber, Email: req.user.Email });
 });
 
-router.put('/me', auth.verifyUser, (req, res, next) => {
+router.patch('/me', auth.verifyUser, (req, res, next) => {
     User.findByIdAndUpdate(req.user._id, { $set: req.body }, { new: true })
         .then((user) => {
             res.json({ _id: req.user._id, 
@@ -93,4 +93,5 @@ router.delete('/:id', function(req, res){
     
     });
 
+    
 module.exports = router;
