@@ -81,4 +81,16 @@ router.delete('/:id', function(req, res){
     })
     })
 
+    router.get('/search/:username', async (req, res) => {
+        const searchName = req.params.username;
+        console.log(searchName);
+        try {
+        const search = await User.find({$text:{$search:searchName}})
+        res.send(search);
+        } catch (error) {
+            res.status(400).send(error)
+        }
+    
+    });
+
 module.exports = router;

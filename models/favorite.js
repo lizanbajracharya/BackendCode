@@ -1,10 +1,12 @@
 const mongoose=require('mongoose')
 const FavoriteSchema=new mongoose.Schema({
     userid:{
-        type:String
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
     },
     bookid:{
-        type:String
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Book'
     }
 })
 

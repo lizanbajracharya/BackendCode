@@ -14,14 +14,10 @@ const BookSchema = new mongoose.Schema({
     BookContent:{
         type:String
     },
-    userid:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
-    },
     Date:{
         type:Date,
-        default:Date.now
+        default:Date.now("MM-DD-YYYY")
     }
 });
-
+BookSchema.path('BookName').index({text: true});
 module.exports = mongoose.model('Book',BookSchema);

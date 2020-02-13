@@ -3,10 +3,13 @@ const Favorite = require('../models/favorite');
 const multer=require('multer')
 const path=require("path");
 const router = express.Router();
+const User=require('../models/user');
+const Book=require('../models/book');
+const auth=require('../auth.js');
 
-router.post('/save', async (req,res)=>{
+router.post('/',auth.verifyUser ,async (req,res)=>{
     const post = new Favorite({
-        userid:req.body.userid,
+        userid:req.user._id,
         bookid:req.body.bookid
     })
     // console.log(post)
@@ -15,14 +18,37 @@ router.post('/save', async (req,res)=>{
     })
 });
 
-router.get('/', async (req,res)=>{
-    try{
-        const data = await Favorite.find({})
-        res.json({data:data,message:true})
-    }
-    catch(err){
-        res.json({message:false, error:err})
-    }
+router.get('/',  auth.verifyUser,async(req, res) => {
+    Favorite.find({userid: req.user._id})
+    .populate("bookid")
+    .exec()
+    .then((productList)=>{
+        res.json(productList);
+    }).catch((e)=>{
+        res.send(e);
+})
+})
+
+router.get('/all', auth.verifyUser, async (req, res) => {
+    Favorite.findOne({
+        userid: req.user._id
+    }).then((product) => {
+        if (product) {
+            return true;
+        }
+        return false;
+    }).
+    then((canUploadImage) => {
+        if (canUploadImage) {
+            Book.find({}).then((productList)=>{
+                res.send(productList);
+            }).catch((e)=>{
+                res.send(e);
+            })
+        } else {
+            res.sendStatus(404);
+        }
+    })
 });
 
 module.exports=router

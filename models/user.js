@@ -30,6 +30,6 @@ const UserSchema=new mongoose.Schema({
         default:false
     }
 });
-
+UserSchema.path('username').index({text: true});
 const User=mongoose.model('User',UserSchema);
 module.exports=User;

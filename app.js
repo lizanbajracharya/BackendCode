@@ -14,6 +14,7 @@ const userRouter=require('./routes/user');
 const bookRouter=require('./routes/book');
 const favoriteRouter=require('./routes/favorite');
 const orderRouter=require('./routes/order');
+const categoryRouter=require('./routes/category');
 
 const port = 3000;
 const saltRounds=10;
@@ -33,11 +34,12 @@ app.use(cors());
 
 app.use('/upload',express.static(__dirname+'/upload/productlist'));
 app.use('/load',express.static(__dirname+'/book/booklist/'));
+app.use('/loadimg',express.static(__dirname+'/category/categorylist/'));
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:false}));
 
 
 app.use('/product',productRouter);
@@ -46,7 +48,7 @@ app.use('/book',bookRouter);
 app.use('/uploadbook',uploadRouter);
 app.use('/favorite',favoriteRouter);
 app.use('/order',orderRouter);
-
+app.use('/category',categoryRouter);
 
 app.use((req,res,next)=>{
   const error=new Error('Not Found');
