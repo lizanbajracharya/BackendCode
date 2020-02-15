@@ -57,6 +57,7 @@ router.get('/search/:bookName', async (req, res) => {
     console.log(searchName);
     try {
     const search = await Book.find({$text:{$search:searchName}})
+    console.log(search)
     res.send(search);
     } catch (error) {
         res.status(400).send(error)

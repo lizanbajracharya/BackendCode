@@ -51,5 +51,13 @@ router.get('/all', auth.verifyUser, async (req, res) => {
     })
 });
 
+router.delete('/:id', function(req, res){
+    Favorite.findByIdAndDelete(req.params.id).then(function(){
+        res.send("deleted")
+    }).catch(function(){ 
+        res.send(e)
+    })
+    })
+
 module.exports=router
 
