@@ -176,7 +176,7 @@ router.patch('/user/:bookId',auth.verifyUser,upload.single('BookContent'),(req, 
 });
 
 
-router.delete('/deletebook/:id', function(req, res){
+router.delete('/:id', function(req, res){
     Book.findByIdAndDelete(req.params.id).then(function(){
         res.send("deleted")
     }).catch(function(){ 

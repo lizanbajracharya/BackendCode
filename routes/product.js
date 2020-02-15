@@ -106,5 +106,17 @@ router.delete("/:productId",(req,res,next)=>{
         })
     })
 })
+
+router.get('/search/:productName', async (req, res) => {
+    const searchName = req.params.productName;
+    console.log(searchName);
+    try {
+    const search = await Product.find({$text:{$search:searchName}})
+    console.log(search)
+    res.send(search);
+    } catch (error) {
+        res.status(400).send(error)
+    }
+});
 module.exports=router;
 // module.exports=uploadRouter;

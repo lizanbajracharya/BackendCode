@@ -14,6 +14,7 @@ router.post('/',auth.verifyUser, async (req,res)=>{
         location:req.body.location,
         mobilenumber:req.body.mobilenumber
     })
+    console.log(post)
     post.save().then((order)=>{
         res.send(order)
     })
